@@ -19,27 +19,27 @@
       delegate_to: "{{ report_server }}"
       run_once: true  # noqa: run-once[task]
       block:
-        - name: Install firewall dependencies
-          ansible.builtin.dnf:
-            name:
-              - firewalld
-              - python3-firewall
-            state: present
+        # - name: Install firewall dependencies
+        #   ansible.builtin.dnf:
+        #     name:
+        #       - firewalld
+        #       - python3-firewall
+        #     state: present
 
-        - name: Start firewalld
-          ansible.builtin.service:
-            name: firewalld
-            state: started
+        # - name: Start firewalld
+        #   ansible.builtin.service:
+        #     name: firewalld
+        #     state: started
 
-        - name: Enable firewall http service
-          ansible.posix.firewalld:
-            service: '{{ item }}'
-            state: enabled
-            immediate: true
-            permanent: true
-          loop:
-            - http
-            - https
+        # - name: Enable firewall http service
+        #   ansible.posix.firewalld:
+        #     service: '{{ item }}'
+        #     state: enabled
+        #     immediate: true
+        #     permanent: true
+        #   loop:
+        #     - http
+        #     - https
 
         - name: Build report server
           ansible.builtin.include_role:
