@@ -13,7 +13,7 @@
 
     - name: Include Patching Role
       ansible.builtin.include_role:
-        name: "../collections/ansible_collections/demo/patching/patch_linux"
+        name: "../collections/ansible_collections/demo/patching/roles/patch_linux"
 
     - name: Deploy report server
       delegate_to: "{{ report_server }}"
@@ -45,11 +45,11 @@
           ansible.builtin.include_role:
             name: "{{ item }}"
           loop:
-            - "../collections/ansible_collections/demo/patching/report_server"
-            - "../collections/ansible_collections/demo/patching/report_linux"
-            - "../collections/ansible_collections/demo/patching/report_linux_patching"
+            - "../collections/ansible_collections/demo/patching/roles/report_server"
+            - "../collections/ansible_collections/demo/patching/roles/report_linux"
+            - "../collections/ansible_collections/demo/patching/roles/report_linux_patching"
 
         - name: Publish report landing page
           ansible.builtin.include_role:
-            name: "../collections/ansible_collections/demo/patching/report_server"
+            name: "../collections/ansible_collections/demo/patching/roles/report_server"
             tasks_from: linux_landing_page
