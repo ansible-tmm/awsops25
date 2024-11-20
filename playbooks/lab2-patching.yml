@@ -1,6 +1,6 @@
 ---
 - hosts: "{{ HOSTS }}"
-  become: yes
+  become: true
   vars:
     report_server: rhel1
 
