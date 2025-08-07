@@ -10,6 +10,13 @@
         name: "ansible-demo"
       register: create_key
 
+    # - name: Save private key
+    #   ansible.builtin.copy:
+    #     content: "{{ create_key.key.private_key }}"
+    #     dest: "ansible-demo.pem"
+    #     mode: '0400'
+    #   when: create_key.changed
+
     - name: Add machine credential
       ansible.controller.credential:
         name: "RHEL on AWS - SSH KEY"
@@ -25,6 +32,20 @@
           controller_password: ansible123!
         validate_certs: false
       when: create_key.changed
+
+    # - name: Add machine credential
+    #   ansible.controller.credential:
+    #     name: "RHEL on AWS - SSH KEY"
+    #     description: "Machine Credential for AWS instances"
+    #     organization: "{{ organization | default('Default') }}"
+    #     credential_type: Machine
+    #     inputs:
+    #       username: ec2-user
+    #       ssh_key_data: "{{ lookup('file', 'ansible-demo.pem') }}"
+    #       controller_host: "https://control"
+    #       controller_username: admin
+    #       controller_password: ansible123!
+    #     validate_certs: false
 
     - name: Create AWS VPC {{ ec2_name_prefix }}-vpc
       amazon.aws.ec2_vpc_net:
